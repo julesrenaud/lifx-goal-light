@@ -1,0 +1,31 @@
+{
+  "name": "lifx-goal-light",
+  "version": "1.0.0",
+  "description": "A Node.js app that polls NHL stats api data for goals and period end and controls LIFX light bulbs via the LAN api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julesrenaud/lifx-goal-light"
+  },
+  "author": "Jules Renaud",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "duration": "^0.2.2",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "fetch": "^1.1.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0",
+    "ms": "^2.1.1",
+    "node-lifx-lan": "^0.3.1",
+    "nodemon": "^1.18.10",
+    "popper.js": "^1.14.7",
+    "pug": "^2.0.3",
+    "statsapi-nhl": "^1.0.3",
+    "winston": "^3.2.1"
+  }
+}

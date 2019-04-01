@@ -1,0 +1,60 @@
+doctype html
+html
+  include head.pug
+  body
+    form(method='POST' action='/')  
+      .container.pt-4.pb-5(style='max-width:600px;')
+        if showSavedBanner
+          .row
+            .col
+              .alert.alert-success.alert-dismissible.fade.show(role='alert')
+                | Your options were saved
+                button(button type='button' class='close' data-dismiss='alert' aria-label='Close')
+                  span(aria-hidden='true') &times;
+        .row
+          .col.text-center.pb-3
+            h3 Choose your team
+        .row
+          .col
+            .btn-group-toggle(data-toggle='buttons')
+              each team in teams
+                label.btn.btn-light.btn-block(style='cursor:pointer;' class= team.name == config.teamName ? 'active' : null)
+                  input(type='radio' autocomplete='off' name='teamName' value=team.name checked= team.name == config.teamName)
+                  img(src=`${nhlLogosBaseUrl}${team.id}.svg` style='width:100%; max-height:80px;')
+        .row.pt-4.pb-4
+          .col
+            a.text-secondary(data-toggle='collapse' href='#advanced-options' role='button' aria-expanded='false' aria-controls='advanced-options' style='text-decoration:none;')
+              | Advanced options [<span class='js-icon-see-more'>+</span>]
+            .collapse#advanced-options
+              .card.card-body.mt-2
+                .form-group.mt-2
+                  label(for='goalLightLabel') Goal light name
+                  input.form-control#goalLightLabel(type='text' name='label' value=config.label)
+                  small.form-text.text-muted
+                    | Leave empty to control all LIFX lights on local network
+                .form-group.mt-2
+                  label(for='goalLightBrightness') Goal light brightness
+                  input.form-control-range#goalLightBrightness(type='range' min='0.3' max='0.9' step='0.1' name='brightness' value=config.brightness)
+                  small.text-monospace.form-text.text-muted(style='display:flex; justify-content:space-between; font-size:70%;')
+                    each step in ['0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']
+                      span !{step}
+                .form-group.mt-2
+                  label(for='goalLightDelay') Goal light delay (seconds)
+                  input.form-control-range#goalLightDelay(type='range' min='0' max='60000' step='1000' name='delay' value=config.delay)
+                  small.text-monospace.form-text.text-muted(style='display:flex; justify-content:space-between; font-size:70%;')
+                    each step in ['0&nbsp;', '10', '20', '30', '40', '50', '60']
+                      span !{step}
+                .form-group.mt-2
+                  label(for='goalLightDuration') Goal light duration (seconds)
+                  input.form-control-range#goalLightDuration(type='range' min='5000' max='45000' step='5000' name='duration' value=config.duration)
+                  small.text-monospace.form-text.text-muted(style='display:flex; justify-content:space-between; font-size:70%;')
+                    each step in ['5&nbsp;', '10', '15', '20', '25', '30', '35', '40', '45']
+                      span !{step}
+            
+        .row
+          .col.text-center.pb-2
+            input.btn.btn-lg.btn-block.btn-dark(type='submit' value='Save options')
+
+    script(src='/jquery/jquery.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+    script(src='/js/script.js')
