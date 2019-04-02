@@ -5,7 +5,7 @@ $('#advancedOptions').on('hide.bs.collapse show.bs.collapse', function() {
 });
 
 $('#goalLightSubmit').click(function() {
-  $(this).find('span').toggleClass('sr-only');
+  $(this).find('span').toggleClass('invisible');
 
   setTimeout(() => {
     $(this).prop('disabled', function(i,v) { return !v; });
