@@ -23,9 +23,9 @@ html
                   img(src=`${nhlLogosBaseUrl}${team.id}.svg` style='width:100%; max-height:80px;')
         .row.pt-4.pb-4
           .col
-            a.text-secondary(data-toggle='collapse' href='#advanced-options' role='button' aria-expanded='false' aria-controls='advanced-options' style='text-decoration:none;')
+            a.text-secondary(data-toggle='collapse' href='#advancedOptions' role='button' aria-expanded='false' aria-controls='advanced-options' style='text-decoration:none;')
               | Advanced options [<span class='js-icon-see-more'>+</span>]
-            .collapse#advanced-options
+            .collapse#advancedOptions
               .card.card-body.mt-2
                 .form-group.mt-2
                   label(for='goalLightLabel') Goal light name
@@ -50,10 +50,12 @@ html
                   small.text-monospace.form-text.text-muted(style='display:flex; justify-content:space-between; font-size:70%;')
                     each step in ['5&nbsp;', '10', '15', '20', '25', '30', '35', '40', '45']
                       span !{step}
-            
+
         .row
           .col.text-center.pb-2
-            input.btn.btn-lg.btn-block.btn-dark(type='submit' value='Save options')
+            button.btn.btn-lg.btn-block.btn-dark#goalLightSubmit
+              span.spinner-border.sr-only(role='status' style='width:22px;height:22px;border-width:3px;')
+              span Save options
 
     script(src='/jquery/jquery.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')

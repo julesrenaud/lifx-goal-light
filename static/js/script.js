@@ -1,7 +1,15 @@
-$('#advanced-options').on('hide.bs.collapse show.bs.collapse', function() {
+$('#advancedOptions').on('hide.bs.collapse show.bs.collapse', function() {
   var $icon = $(this).prev().find('.js-icon-see-more');
   var newText = $icon.text() === '+' ? '-' : '+';
   $icon.text(newText);
+});
+
+$('#goalLightSubmit').click(function() {
+  $(this).find('span').toggleClass('sr-only');
+
+  setTimeout(() => {
+    $(this).prop('disabled', function(i,v) { return !v; });
+  }, 50);
 });
 
 if ('serviceWorker' in navigator) {
