@@ -1,6 +1,6 @@
 {
   "name": "lifx-goal-light",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Node.js app that polls NHL stats api data for goals and period end and controls LIFX light bulbs via the LAN api",
   "main": "index.js",
   "scripts": {
