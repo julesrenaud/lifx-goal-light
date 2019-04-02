@@ -4,12 +4,11 @@ $('#advancedOptions').on('hide.bs.collapse show.bs.collapse', function() {
   $icon.text(newText);
 });
 
-$('#goalLightSubmit').click(function() {
-  $(this).find('span').toggleClass('invisible');
+$('#goalLight').submit(function() {
+  var $btn = $('#goalLightSubmit');
 
-  setTimeout(() => {
-    $(this).prop('disabled', function(i,v) { return !v; });
-  }, 50);
+  $btn.find('span').toggleClass('invisible');
+  $btn.prop('disabled', true);
 });
 
 if ('serviceWorker' in navigator) {
