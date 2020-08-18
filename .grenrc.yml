@@ -1,0 +1,9 @@
+---
+dataSource: 'milestones'
+prefix: ''
+groupBy:
+  Features: ['enhancement']
+  Fixes: ['bug']
+ignoreLabels: ['enhancement', 'bug']
+milestoneMatch: 'Release {{tag_name}}'
+changelogFilename: 'CHANGELOG.md'
