@@ -1,0 +1,62 @@
+on:
+  release:
+    types: [published]
+
+name: Update release
+
+jobs:
+  build:
+    name: Update release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup node/npm
+        uses: actions/setup-node@v1
+      - name: Install gren
+        run: npm install github-release-notes -g
+      - name: Install jq
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+      - name: Add notes to release
+        run: gren release --override
+        env:
+          GREN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update changelog
+        run: gren changelog --override
+        env:
+          GREN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit updated changelog, force reassign tag to rebuild release and push
+        run: |
+          CURRENT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          git config --global user.email 'github-actions-git-commit@users.noreply.github.com'
+          git config --global user.name 'Github Actions'
+          git fetch
+          git checkout master
+          git add CHANGELOG.md
+          git commit -m 'Updated changelog via github-release-notes'
+          git tag $CURRENT_TAG -f -m 'Force moving tag to include changelog in release'
+          git push && git push --tags -f
+      - name: Find milestone, close it
+        run: |
+          MILESTONES_JSON=$(curl --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/milestones)
+          for row in $(echo "${MILESTONES_JSON}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${row} | base64 --decode | jq -r ${1}
+            }
+
+            CURRENT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+            RELEASE_TITLE=$(_jq '.title')
+            RELEASE_URL=$(_jq '.url')
+            OPEN_ISSUES=$(_jq '.open_issues')
+            CURRENT_RELEASE="Release $CURRENT_TAG"
+
+            if [ "$RELEASE_TITLE" = "$CURRENT_RELEASE" ] && [ $OPEN_ISSUES -eq 0 ]; then
+              curl --request PATCH \
+                --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                --header 'Content-Type: application/json' \
+                --url $RELEASE_URL \
+                --data '{"state":"closed"}'
+            fi
+          done
