@@ -26,7 +26,7 @@
     "node-lifx-lan": "^0.4.0",
     "nodemon": "^2.0.4",
     "popper.js": "^1.15.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "statsapi-nhl": "^1.0.3",
     "winston": "^3.2.1"
   }
