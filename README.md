@@ -1,7 +1,5 @@
 # LIFX Goal Light
 
-[![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
-
 A Node.js app that polls NHL stats API (no official documentation available) data for a team's game events and controls LIFX light bulbs via the [LIFX LAN Protocol](https://lan.developer.lifx.com/).
 
 ## Usage
